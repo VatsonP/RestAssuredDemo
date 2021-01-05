@@ -2,6 +2,7 @@ package steps;
 
 import io.restassured.http.ContentType;
 import org.hamcrest.core.Is;
+import utilities.APIConstant;
 
 import java.util.HashMap;
 
@@ -17,17 +18,17 @@ public class BDDStyledMethod {
 
     public static void SimpleGETPost(String postNumber){
         given().contentType(ContentType.JSON).
-                when().get(String.format("http://localhost:3000/posts/%s", postNumber)).
+                when().get(String.format(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/%s"), postNumber)).
                 then().body("author", is("Karthik KK"));
     }
 
 
     public static void PerformContainsCollection() {
         given()
-                .contentType(ContentType.JSON)
-        .when()
-                .get("http://localhost:3000/posts/")
-        .then()
+                .contentType(ContentType.JSON).
+        when()
+                .get(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/")).
+        then()
                 .body("author", containsInAnyOrder("Karthik KK", "Karthik KK", null)).statusCode(200);
     }
 
@@ -38,7 +39,7 @@ public class BDDStyledMethod {
         with()
                 .pathParams("post_num", 1).
         when()
-                .get("http://localhost:3000/posts/{post_num}").
+                .get(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/{post_num}")).
         then()
                 .body("author", containsString("Karthik KK"));
     }
@@ -48,7 +49,8 @@ public class BDDStyledMethod {
                 .contentType(ContentType.JSON)
                 .queryParam("id", 1).
         when()
-                .get("http://localhost:3000/posts/").
+                .get(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/")).
+
         then()
                 .body("author", hasItem("Karthik KK"));
     }
@@ -64,7 +66,7 @@ public class BDDStyledMethod {
         with()
                 .body(postContent).
         when()
-                .post("http://localhost:3000/posts").
+                .post(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/")).
         then()
                 .body("author", Is.is("ExecuteAutomation"));
     }

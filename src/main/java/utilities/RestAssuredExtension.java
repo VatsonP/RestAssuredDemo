@@ -19,7 +19,7 @@ public class RestAssuredExtension {
     public RestAssuredExtension() {
         //Arrange
         RequestSpecBuilder builder = new RequestSpecBuilder();
-        builder.setBaseUri("http://localhost:3000/");
+        builder.setBaseUri(APIConstant.BaseURIstr);
         builder.setContentType(ContentType.JSON);
         var requestSpec = builder.build();
         Request = RestAssured.given().spec(requestSpec);

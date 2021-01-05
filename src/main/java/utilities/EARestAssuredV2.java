@@ -22,7 +22,7 @@ public class EARestAssuredV2 {
 
     public EARestAssuredV2(String uri, String method, String token) {
         //Formulate the API url
-        this.url = "http://localhost:3000" + uri;
+        this.url = APIConstant.addSegToPath(APIConstant.BaseURIstr, uri);
         this.method = method;
         //Assuming we are using only one type of token across the framework, else we need to pass token as parameter to the constructor
         if (token != null)

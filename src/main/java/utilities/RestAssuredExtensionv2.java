@@ -24,7 +24,7 @@ public class RestAssuredExtensionv2 {
     public RestAssuredExtensionv2(String uri, String method, String token) {
 
         //Formulate the API url
-        this.url = "http://localhost:3000" + uri;
+        this.url = APIConstant.addSegToPath(APIConstant.BaseURIstr, uri);
         this.method = method;
 
         if(token != null)
