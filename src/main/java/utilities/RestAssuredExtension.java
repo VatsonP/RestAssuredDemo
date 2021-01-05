@@ -16,23 +16,13 @@ public class RestAssuredExtension {
 
     public static RequestSpecification Request;
 
-    public RestAssuredExtension(String baseURIstr) {
+    public RestAssuredExtension(String baseURLstr) {
         //Arrange
         RequestSpecBuilder builder = new RequestSpecBuilder();
-        builder.setBaseUri(baseURIstr);
+        builder.setBaseUri(baseURLstr);
         builder.setContentType(ContentType.JSON);
         var requestSpec = builder.build();
         Request = RestAssured.given().spec(requestSpec);
-    }
-
-    public static void GetOpsWithPathParameter(String url, Map<String, String> pathParams) {
-        //Act
-        Request.pathParams(pathParams);
-        try {
-            Request.get(new URI(url));
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
     }
 
     public static ResponseOptions<Response> GetOps(String url) {
@@ -45,6 +35,12 @@ public class RestAssuredExtension {
         return null;
     }
 
+    public static ResponseOptions<Response> GetOpsWithPathParameter(String url, Map<String, String> pathParams) {
+        //Act
+        Request.pathParams(pathParams);
+        return Request.get(url);
+    }
+
     public static ResponseOptions<Response> GetOpsWithToken(String url, String token) {
         //Act
         try {
@@ -55,6 +51,7 @@ public class RestAssuredExtension {
         }
         return null;
     }
+
 
     public static ResponseOptions<Response> PUTOpsWithBodyAndPathParams(String url, Map<String,String> body, Map<String,String> pathParams) {
         Request.pathParams(pathParams);

@@ -10,8 +10,8 @@ public class TestInitialize {
     @Before
     public void TestSetup(){
 
-        BDDStyledMethod.setBaseURIstr(APIConstant.BaseURIstr);
+        BDDStyledMethod.setBaseURLstr(APIConstant.BaseURLstr);
 
-        RestAssuredExtension restAssuredExtension = new RestAssuredExtension(APIConstant.BaseURIstr);
+        var restAssuredExtension = new RestAssuredExtension(APIConstant.BaseURLstr);
     }
 }

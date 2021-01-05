@@ -11,6 +11,15 @@ Feature: GETPosts
 
 
   @smoke
+  Scenario: Verify Parameter of Get
+    Given I perform GET Parameter operation for "posts/{postid}"
+      | postid |
+      | 2      |
+    Then I should see verify GET Parameter
+      | postid |
+      | 2      |
+
+  @smoke
   Scenario: Verify GET operation with bearer authentication token
     Given I perform authentication operation for "/auth/login" with body
       | email              | password  |

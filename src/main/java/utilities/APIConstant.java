@@ -8,7 +8,7 @@ public class APIConstant {
         public static final String DELETE = "DELETE";
    }
 
-    public static String BaseURIstr = "http://localhost:3000/";
+    public static String BaseURLstr = "http://localhost:3000/";
 
     public static String addSegToPath(String path, String segment) {
         if (path == null || path.isEmpty()) {

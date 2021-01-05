@@ -20,9 +20,9 @@ public class EARestAssuredV2 {
     private String method;
     private String url;
 
-    public EARestAssuredV2(String uri, String method, String token) {
+    public EARestAssuredV2(String url, String method, String token) {
         //Formulate the API url
-        this.url = APIConstant.addSegToPath(APIConstant.BaseURIstr, uri);
+        this.url = APIConstant.addSegToPath(APIConstant.BaseURLstr, url);
         this.method = method;
         //Assuming we are using only one type of token across the framework, else we need to pass token as parameter to the constructor
         if (token != null)
@@ -36,6 +36,7 @@ public class EARestAssuredV2 {
         RequestSpecification request = RestAssured.given();
         request.contentType(ContentType.JSON);
         request.spec(requestSpec);
+
         if (this.method.equalsIgnoreCase(APIConstant.ApiMethods.POST)) {
             return request.post(this.url);
         } else if (this.method.equalsIgnoreCase(APIConstant.ApiMethods.DELETE)) {

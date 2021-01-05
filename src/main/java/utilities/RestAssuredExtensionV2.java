@@ -17,14 +17,14 @@ public class RestAssuredExtensionV2 {
 
     /**
      * RestAssuredExtensionv2 constructor to pass the initial settings for the the following method
-     * @param uri
+     * @param url
      * @param method
      * @param token
      */
-    public RestAssuredExtensionV2(String uri, String method, String token) {
+    public RestAssuredExtensionV2(String url, String method, String token) {
 
         //Formulate the API url
-        this.url = APIConstant.addSegToPath(APIConstant.BaseURIstr, uri);
+        this.url = APIConstant.addSegToPath(APIConstant.BaseURLstr, url);
         this.method = method;
 
         if(token != null)
