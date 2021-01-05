@@ -16,10 +16,10 @@ public class RestAssuredExtension {
 
     public static RequestSpecification Request;
 
-    public RestAssuredExtension() {
+    public RestAssuredExtension(String baseURIstr) {
         //Arrange
         RequestSpecBuilder builder = new RequestSpecBuilder();
-        builder.setBaseUri(APIConstant.BaseURIstr);
+        builder.setBaseUri(baseURIstr);
         builder.setContentType(ContentType.JSON);
         var requestSpec = builder.build();
         Request = RestAssured.given().spec(requestSpec);

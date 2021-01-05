@@ -15,10 +15,19 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 
 public class BDDStyledMethod {
 
+    private static String baseURIstr;
+
+    private static String getBaseURIstr() {
+        return baseURIstr;
+    }
+    public static void setBaseURIstr(String baseURIstr) {
+        BDDStyledMethod.baseURIstr = baseURIstr;
+    }
+
 
     public static void SimpleGETPost(String postNumber){
         given().contentType(ContentType.JSON).
-                when().get(String.format(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/%s"), postNumber)).
+                when().get(String.format(APIConstant.addSegToPath(getBaseURIstr(), "posts/%s"), postNumber)).
                 then().body("author", is("Karthik KK"));
     }
 
@@ -27,7 +36,7 @@ public class BDDStyledMethod {
         given()
                 .contentType(ContentType.JSON).
         when()
-                .get(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/")).
+                .get(APIConstant.addSegToPath(getBaseURIstr(), "posts/")).
         then()
                 .body("author", containsInAnyOrder("Karthik KK", "Karthik KK", null)).statusCode(200);
     }
@@ -39,7 +48,7 @@ public class BDDStyledMethod {
         with()
                 .pathParams("post_num", 1).
         when()
-                .get(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/{post_num}")).
+                .get(APIConstant.addSegToPath(getBaseURIstr(), "posts/{post_num}")).
         then()
                 .body("author", containsString("Karthik KK"));
     }
@@ -49,7 +58,7 @@ public class BDDStyledMethod {
                 .contentType(ContentType.JSON)
                 .queryParam("id", 1).
         when()
-                .get(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/")).
+                .get(APIConstant.addSegToPath(getBaseURIstr(), "posts/")).
 
         then()
                 .body("author", hasItem("Karthik KK"));
@@ -66,13 +75,10 @@ public class BDDStyledMethod {
         with()
                 .body(postContent).
         when()
-                .post(APIConstant.addSegToPath(APIConstant.BaseURIstr, "posts/")).
+                .post(APIConstant.addSegToPath(getBaseURIstr(), "posts/")).
         then()
                 .body("author", Is.is("ExecuteAutomation"));
     }
-
-
-
 
 
 }
