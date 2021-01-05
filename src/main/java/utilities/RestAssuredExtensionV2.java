@@ -9,7 +9,7 @@ import io.restassured.specification.RequestSpecification;
 
 import java.util.Map;
 
-public class RestAssuredExtensionv2 {
+public class RestAssuredExtensionV2 {
 
     private RequestSpecBuilder builder = new RequestSpecBuilder();
     private String method;
@@ -21,7 +21,7 @@ public class RestAssuredExtensionv2 {
      * @param method
      * @param token
      */
-    public RestAssuredExtensionv2(String uri, String method, String token) {
+    public RestAssuredExtensionV2(String uri, String method, String token) {
 
         //Formulate the API url
         this.url = APIConstant.addSegToPath(APIConstant.BaseURIstr, uri);
