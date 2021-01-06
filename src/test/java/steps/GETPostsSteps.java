@@ -1,7 +1,6 @@
 package steps;
 
 import cucumber.api.DataTable;
-import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -14,13 +13,12 @@ import lombokdemo.model.Posts;
 import utilities.APIConstant;
 import utilities.EARestAssuredV2;
 import utilities.RestAssuredExtension;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
@@ -69,7 +67,15 @@ public class GETPostsSteps {
         Posts   post = response.getBody().as(Posts.class);
 
         String post_id  = Integer.toString(post.getId());
+        System.out.println("post_id= "+post_id);
         assertThat(post_id, equalTo(data.get(1).get(0)));
+
+        String author   = post.getAuthor();
+        System.out.println("author= "+author);
+        assertThat(author, equalTo(data.get(1).get(1)));
+
+        var title = post.getTitle();
+        System.out.println("title= "+title);
     }
 
     //----------------------------------------------------------------------------------------------------------
@@ -111,8 +117,8 @@ public class GETPostsSteps {
         token = eaRestAssuredV2.Authenticate(loginBody);
     }
 
-
     // Feature: ComplexDataGet ----------------------------------------------------------------------------------
+
     @And("^I perform GET operation with path parameter for address \"([^\"]*)\"$")
     public void iPerformGETOperationWithPathParameterForAddress(String url, DataTable table) {
         var data = table.raw();
@@ -135,8 +141,7 @@ public class GETPostsSteps {
 
         assertThat(address.getStreet(), equalTo(streetName));
 
-
-//        assertThat(a[0].getAddress().getStreet(), equalTo(streetName));
+    //  assertThat(a[0].getAddress().getStreet(), equalTo(streetName));
     }
 
     //----------------------------------------------------------------------------------------------------------

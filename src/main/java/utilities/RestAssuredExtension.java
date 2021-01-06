@@ -72,13 +72,13 @@ public class RestAssuredExtension {
         return Request.get(url);
     }
 
-    public static ResponseOptions<Response> GetWithQueryParamsWithToken(String url,Map<String, String> pathParams, String token)  {
+    public static ResponseOptions<Response> GetWithQueryParamsWithToken(String url, Map<String, String> pathParams, String token)  {
         Request.header(new Header("Authorization", "Bearer " + token));
         Request.queryParams(pathParams);
         return Request.get(url);
     }
 
-    public static ResponseOptions<Response> PostOpsWithBody(String url,Map<String, String> body)  {
+    public static ResponseOptions<Response> PostOpsWithBody(String url, Map<String, String> body)  {
         Request.body(body);
         return Request.post(url);
     }
