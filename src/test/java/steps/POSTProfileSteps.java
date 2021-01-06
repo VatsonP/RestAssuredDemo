@@ -48,6 +48,7 @@ public class POSTProfileSteps {
         assertThat(response.getBody().jsonPath().get("name"), equalTo(name));
     }
 
+    // -- DeletePost --------------------------------------------------------------------------------------
 
     @Given("^I ensure to Perform POST operation for \"([^\"]*)\" with body as$")
     public void iEnsureToPerformPOSTOperationForWithBodyAs(String url, DataTable table) throws Throwable {
@@ -91,8 +92,9 @@ public class POSTProfileSteps {
 
         response = RestAssuredExtension.GetWithPathParams(url, pathParams);
     }
+    // ----------------------------------------------------------------------------------------------------
 
-
+    // -- PUTPost -----------------------------------------------------------------------------------------
 
     @And("^I Perform PUT operation for \"([^\"]*)\"$")
     public void iPerformPUTOperationFor(String url, DataTable table) throws Throwable {
@@ -110,5 +112,5 @@ public class POSTProfileSteps {
         RestAssuredExtension.PUTOpsWithBodyAndPathParams(url, body, pathParams);
 
     }
-
+    // ----------------------------------------------------------------------------------------------------
 }

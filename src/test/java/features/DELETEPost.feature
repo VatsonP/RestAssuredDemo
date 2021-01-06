@@ -1,5 +1,5 @@
-Feature: DeletePosts
-  Test the delete operation
+Feature: DeletePost
+  Test the DELETE operation using REST-assured library
 
   @smoke
   Scenario: Verify DELETE operation after POST

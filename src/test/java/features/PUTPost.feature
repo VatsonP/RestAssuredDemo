@@ -1,5 +1,5 @@
 Feature: PUTPost
-  Verify put post operation
+  Test PUT operation using REST-assured library
 
   @smoke
   Scenario: Verify PUT operation after POST
