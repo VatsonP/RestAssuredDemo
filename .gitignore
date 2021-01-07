@@ -25,3 +25,6 @@ hs_err_pid*
 # My Add Settings: Log/*.txt and screenshot/*.png
 .idea/workspace.xml
 .idea/uiDesigner.xml
+
+# Node js modules
+json/node_modules
