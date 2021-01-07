@@ -1,6 +1,7 @@
 package steps;
 
 import cucumber.api.DataTable;
+import cucumber.api.PendingException;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -10,6 +11,7 @@ import lombokdemo.model.Address;
 import lombokdemo.model.Location;
 import lombokdemo.model.LoginBody;
 import lombokdemo.model.Posts;
+import org.hamcrest.core.Is;
 import utilities.APIConstant;
 import utilities.EARestAssuredV2;
 import utilities.RestAssuredExtension;
@@ -19,6 +21,7 @@ import java.util.Map;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
@@ -36,12 +39,12 @@ public class GETPostsAuthSteps {
     //Deserialize
     @Then("^I should see the author name as \"([^\"]*)\" with json validation$")
     public void iShouldSeeTheAuthorNameAsWithJsonValidation(String authorName) {
-
+    /*
         var a = response.getBody().asString();
 
         assertThat(a, matchesJsonSchemaInClasspath("post.json"));
-
-//        assertThat(response.getBody().jsonPath().get("author"), hasItem("Karthik KK"));
+    */
+        assertThat(response.getBody().jsonPath().get("author"), hasItem("Karthik KK"));
     }
 
 
@@ -50,19 +53,31 @@ public class GETPostsAuthSteps {
 
         var data = table.raw();
 
-//        HashMap<String, String> body = new HashMap<>();
-//        body.put("email", data.get(1).get(0));
-//        body.put("password", data.get(1).get(1));
-
+        HashMap<String, String> body = new HashMap<>();
+        body.put("email", data.get(1).get(0));
+        body.put("password", data.get(1).get(1));
+     /*
         LoginBody loginBody = new LoginBody();
         loginBody.setEmail(data.get(1).get(0));
         loginBody.setPassword(data.get(1).get(1));
+    */
 
         EARestAssuredV2 eaRestAssuredV2 = new EARestAssuredV2(url, APIConstant.ApiMethods.POST, token);
 
-        //token = eaRestAssuredV2.Authenticate(body);
-
+        token = eaRestAssuredV2.Authenticate(body);
+    /*
         token = eaRestAssuredV2.Authenticate(loginBody);
+     */
+    }
+
+    @Then("^I should check the author name as \"([^\"]*)\"$")
+    public void iShouldCheckTheAuthorNameAs(String authorName)  {
+        var responseAuthorName = response.getBody().jsonPath().getString("author");
+
+        System.out.println("authorName= "+ authorName);
+        System.out.println("responseAuthor= "+ responseAuthorName);
+
+        assertThat(responseAuthorName, Is.is(authorName));
     }
 
     // Feature: ComplexDataGet ----------------------------------------------------------------------------------
