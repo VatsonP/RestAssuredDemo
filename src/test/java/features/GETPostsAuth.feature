@@ -5,15 +5,26 @@ Feature: GETPostsAuth
   @smoke
   Scenario: Verify GET operation with bearer authentication token
     Given I perform authentication operation for "/auth/login" with body
-      | email              | password  |
-      | karthik@gmail.com  | haha123 |
-    Given I perform GET operation with token for "/posts/1"
+      | email              | password |
+      | karthik@gmail.com  | haha123  |
+    Given I perform GET operation with token for "/posts"
+    Then I should check the author names like "Karthik KK"
+
+
+  @smoke
+  Scenario: Verify GET operation with queryParam and bearer authentication token
+    Given I perform authentication operation for "/auth/login" with body
+      | email              | password |
+      | karthik@gmail.com  | haha123  |
+    Given I perform GET operation with queryParam and token for "/posts"
+      | id                 |    2     |
     Then I should check the author name as "Karthik KK"
+
 
   @smoke
   Scenario: Verify GET operation with json validation
     Given I perform authentication operation for "/auth/login" with body
       | email              | password  |
-      | karthik@gmail.com  | haha123 |
+      | karthik@gmail.com  | haha123   |
     Given I perform GET operation with token for "/posts/1"
     Then I should see the author name as "Karthik KK" with json validation
