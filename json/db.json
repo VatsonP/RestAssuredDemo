@@ -51,8 +51,10 @@
             "address": {
                 "street": "Auckland Central",
                 "flat_no": "140",
-                "pincode": 1231
+                "pincode": 1231,
+                "type": "primary"
             }
+
          }
   ]
 }
