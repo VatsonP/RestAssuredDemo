@@ -17,7 +17,8 @@ Feature: GETPostsAuthV2
       | email              | password |
       | karthik@gmail.com  | haha123  |
     Given V2 I perform GET operation with queryParam and token for "/posts"
-      | id                 |    2     |
+      | id   |
+      | 2    |
     Then V2 I should check the author name as "Karthik KK"
 
 

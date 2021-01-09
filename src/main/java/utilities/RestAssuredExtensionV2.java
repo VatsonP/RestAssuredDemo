@@ -24,7 +24,7 @@ public class RestAssuredExtensionV2 {
     public RestAssuredExtensionV2(String url, String method, String token) {
 
         //Formulate the API url
-        this.url = APIConstant.addSegToPath(APIConstant.BaseURLstr, url);
+        this.url = APIConstant.StrUtils.addSegToPath(APIConstant.BaseURLstr, url);
         this.method = method;
 
         if(token != null)

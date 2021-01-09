@@ -27,7 +27,7 @@ public class BDDStyledMethod {
 
     public static void SimpleGETPost(String postNumber){
         given().contentType(ContentType.JSON).
-                when().get(String.format(APIConstant.addSegToPath(getBaseURLstr(), "posts/%s"), postNumber)).
+                when().get(String.format(APIConstant.StrUtils.addSegToPath(getBaseURLstr(), "posts/%s"), postNumber)).
                 then().body("author", is("Karthik KK"));
     }
 
@@ -36,7 +36,7 @@ public class BDDStyledMethod {
         given()
                 .contentType(ContentType.JSON).
         when()
-                .get(APIConstant.addSegToPath(getBaseURLstr(), "posts/")).
+                .get(APIConstant.StrUtils.addSegToPath(getBaseURLstr(), "posts/")).
         then()
                 .body("author", containsInAnyOrder("Karthik KK", "Karthik KK", null)).statusCode(200);
     }
@@ -48,7 +48,7 @@ public class BDDStyledMethod {
         with()
                 .pathParams("post_num", 1).
         when()
-                .get(APIConstant.addSegToPath(getBaseURLstr(), "posts/{post_num}")).
+                .get(APIConstant.StrUtils.addSegToPath(getBaseURLstr(), "posts/{post_num}")).
         then()
                 .body("author", containsString("Karthik KK"));
     }
@@ -58,7 +58,7 @@ public class BDDStyledMethod {
                 .contentType(ContentType.JSON)
                 .queryParam("id", 1).
         when()
-                .get(APIConstant.addSegToPath(getBaseURLstr(), "posts/")).
+                .get(APIConstant.StrUtils.addSegToPath(getBaseURLstr(), "posts/")).
 
         then()
                 .body("author", hasItem("Karthik KK"));
@@ -75,7 +75,7 @@ public class BDDStyledMethod {
         with()
                 .body(postContent).
         when()
-                .post(APIConstant.addSegToPath(getBaseURLstr(), "posts/")).
+                .post(APIConstant.StrUtils.addSegToPath(getBaseURLstr(), "posts/")).
         then()
                 .body("author", Is.is("ExecuteAutomation"));
     }

@@ -37,26 +37,26 @@ public class GETPostsAuthStepsV2 {
 
         var data = table.raw();
 
+    /*
         HashMap<String, String> body = new HashMap<>();
         body.put("email", data.get(1).get(0));
         body.put("password", data.get(1).get(1));
-    /*
+
         // standard realization (V1), like call for POST request method
         response = RestAssuredExtension.PostOpsWithBody(url, body);
         token    = response.getBody().jsonPath().get("access_token");
     */
         // new V2a
-        EARestAssuredV2 eaRestAssuredV2 = new EARestAssuredV2(url, APIConstant.ApiMethods.POST, token);
-        token = eaRestAssuredV2.Authenticate(body);
+        //EARestAssuredV2 eaRestAssuredV2 = new EARestAssuredV2(url, APIConstant.ApiMethods.POST, token);
+        //token = eaRestAssuredV2.Authenticate(body);
 
-     /* // new V2b
+        // new V2b
         LoginBody loginBody = new LoginBody();
         loginBody.setEmail(data.get(1).get(0));
         loginBody.setPassword(data.get(1).get(1));
 
         EARestAssuredV2 eaRestAssuredV2 = new EARestAssuredV2(url, APIConstant.ApiMethods.POST, token);
         token = eaRestAssuredV2.Authenticate(loginBody);
-    */
     }
 
     @Given("^V2 I perform GET operation with token for \"([^\"]*)\"$")
@@ -79,7 +79,7 @@ public class GETPostsAuthStepsV2 {
         var data = table.raw();
 
         Map<String, String> pathParam = new HashMap<>();
-        pathParam.put(data.get(0).get(0), data.get(0).get(1));
+        pathParam.put(data.get(0).get(0), data.get(1).get(0));
 
         response = RestAssuredExtension.GetWithQueryParamsWithToken(url, pathParam, token);
     }
@@ -111,11 +111,11 @@ public class GETPostsAuthStepsV2 {
 
     // Feature: ComplexDataGet ----------------------------------------------------------------------------------
 
-    @And("^V2 I perform GET operation with path parameter for address \"([^\"]*)\"$")
+    @And("^V2 I perform GET operation with with queryParam for address \"([^\"]*)\"$")
     public void iPerformGETOperationWithPathParameterForAddress(String url, DataTable table) {
         var data = table.raw();
     /*  // V1
-        response = RestAssuredExtension.GetWithQueryParamsWithToken(url, pathParams, response.getBody().jsonPath().get("access_token"));
+        response = RestAssuredExtension.GetWithQueryParamsWithToken(url, queryParams, response.getBody().jsonPath().get("access_token"));
     */
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("id", data.get(1).get(0));
@@ -129,7 +129,7 @@ public class GETPostsAuthStepsV2 {
 
         var a = response.getBody().as(Location[].class);
     /*  // V1
-        assertThat(a[0].getAddress().getStreet(), equalTo(streetName));
+        assertThat(a[0].getAddress().listIterator().next().getStreet(), equalTo(streetName));
     */
         Address address = a[0].getAddress().stream().filter(x -> x.getType().equalsIgnoreCase("primary")).findFirst().orElse(null);
 

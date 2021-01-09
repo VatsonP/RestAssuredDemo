@@ -7,10 +7,10 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseOptions;
-import lombokdemo.model.Address;
-import lombokdemo.model.Location;
+import pojo.Address;
+import pojo.Location;
+import pojo.Posts;
 import lombokdemo.model.LoginBody;
-import lombokdemo.model.Posts;
 import org.hamcrest.core.Is;
 import utilities.APIConstant;
 import utilities.EARestAssuredV2;
@@ -79,7 +79,7 @@ public class GETPostsAuthSteps {
         var data = table.raw();
 
         Map<String, String> pathParam = new HashMap<>();
-        pathParam.put(data.get(0).get(0), data.get(0).get(1));
+        pathParam.put(data.get(0).get(0), data.get(1).get(0));
 
         response = RestAssuredExtension.GetWithQueryParamsWithToken(url, pathParam, token);
     }
@@ -109,29 +109,34 @@ public class GETPostsAuthSteps {
 
     // Feature: ComplexDataGet ----------------------------------------------------------------------------------
 
-    @And("^I perform GET operation with path parameter for address \"([^\"]*)\"$")
+    @And("^I perform GET operation with with queryParam for address \"([^\"]*)\"$")
     public void iPerformGETOperationWithPathParameterForAddress(String url, DataTable table) {
         var data = table.raw();
-    /*  // V1
-        response = RestAssuredExtension.GetWithQueryParamsWithToken(url, pathParams, response.getBody().jsonPath().get("access_token"));
-    */
+
         Map<String, String> queryParams = new HashMap<>();
         queryParams.put("id", data.get(1).get(0));
 
+        // V1
+        response = RestAssuredExtension.GetWithQueryParamsWithToken(url, queryParams, response.getBody().jsonPath().get("access_token"));
+
+     /* // V2
         EARestAssuredV2 eaRestAssuredV2 = new EARestAssuredV2(url, APIConstant.ApiMethods.GET, token);
         response = eaRestAssuredV2.ExecuteWithQueryParams(queryParams);
+     */
     }
 
     @Then("^I should see the street name as \"([^\"]*)\"$")
     public void iShouldSeeTheStreetNameAs(String streetName) {
 
         var a = response.getBody().as(Location[].class);
-    /*  // V1
-        assertThat(a[0].getAddress().getStreet(), equalTo(streetName));
-    */
+        // V1
+        assertThat(a[0].getAddress().listIterator().next().getStreet(), equalTo(streetName));
+
+    /* // V2
         Address address = a[0].getAddress().stream().filter(x -> x.getType().equalsIgnoreCase("primary")).findFirst().orElse(null);
 
         assertThat(address.getStreet(), equalTo(streetName));
+     */
     }
 
 }
