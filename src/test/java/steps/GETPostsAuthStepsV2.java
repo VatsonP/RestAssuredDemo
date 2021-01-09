@@ -111,10 +111,11 @@ public class GETPostsAuthStepsV2 {
         Posts   post = response.getBody().as(Posts.class);
         assertThat(post.getAuthor(), equalTo(authorName));
     */
-
         // V2
-        var respStr = response.getBody().asString();
-        assertThat(respStr, matchesJsonSchemaInClasspath("post.json"));
+        // returns the Body as String (!)
+        var respBodyAsStr = response.getBody().asString();
+        // assert with matching respBodyAsStr to  .\target\classes\post.json structure and values types
+        assertThat(respBodyAsStr, matchesJsonSchemaInClasspath("post.json"));
     }
 
 
