@@ -6,7 +6,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import io.restassured.response.Response;
 import io.restassured.response.ResponseOptions;
-import lombokdemo.model.Posts;
+import pojo.Posts;
 import utilities.RestAssuredExtension;
 
 import java.util.HashMap;
