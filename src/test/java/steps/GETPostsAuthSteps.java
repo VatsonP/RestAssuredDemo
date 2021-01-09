@@ -76,13 +76,17 @@ public class GETPostsAuthSteps {
 
     @Given("^I perform GET operation with queryParam and token for \"([^\"]*)\"$")
     public void iPerformGETOperationWithQueryParamAndTokenFor(String url, DataTable table) {
-
         var data = table.raw();
 
-        Map<String, String> pathParam = new HashMap<>();
-        pathParam.put(data.get(0).get(0), data.get(1).get(0));
-        // V1
-        response = RestAssuredExtension.GetWithQueryParamsWithToken(url, pathParam, token);
+        Map<String, String> queryParam = new HashMap<>();
+        queryParam.put("id", data.get(1).get(0));
+
+      // V1
+        response = RestAssuredExtension.GetWithQueryParamsWithToken(url, queryParam, token);
+    /*    // V2
+        EARestAssuredV2 eaRestAssuredV2 = new EARestAssuredV2(url, APIConstant.ApiMethods.GET, token);
+        response = eaRestAssuredV2.ExecuteWithQueryParams(queryParam);
+     */
     }
 
     @Then("^I should check the author name as \"([^\"]*)\"$")

@@ -14,7 +14,7 @@ import lombokdemo.model.Posts;
 import org.hamcrest.core.Is;
 import utilities.APIConstant;
 import utilities.EARestAssuredV2;
-import utilities.RestAssuredExtension;
+//import utilities.RestAssuredExtension;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,14 +61,19 @@ public class GETPostsAuthStepsV2 {
 
     @Given("^V2 I perform GET operation with token for \"([^\"]*)\"$")
     public void iPerformGETOperationWithTokenFor(String url) {
+     /* // V1
         response = RestAssuredExtension.GetOpsWithToken(url, token);
+     */
+        // V2
+        EARestAssuredV2 eaRestAssuredV2 = new EARestAssuredV2(url, APIConstant.ApiMethods.GET, token);
+        response = eaRestAssuredV2.Execute();
     }
 
 
     @Then("^V2 I should check the author names like \"([^\"]*)\"$")
     public void iShouldCheckTheAuthorNamesLike(String authorName)  {
         System.out.println("authorName= " + authorName);
-
+        // V1
         assertThat(response.getBody().jsonPath().get("author"), containsInAnyOrder(authorName, authorName, null));
     }
 
@@ -78,10 +83,15 @@ public class GETPostsAuthStepsV2 {
 
         var data = table.raw();
 
-        Map<String, String> pathParam = new HashMap<>();
-        pathParam.put(data.get(0).get(0), data.get(1).get(0));
+        Map<String, String> queryParam = new HashMap<>();
+        queryParam.put("id", data.get(1).get(0));
 
-        response = RestAssuredExtension.GetWithQueryParamsWithToken(url, pathParam, token);
+     /* // V1
+        response = RestAssuredExtension.GetWithQueryParamsWithToken(url, queryParam, token);
+    */
+        // V2
+        EARestAssuredV2 eaRestAssuredV2 = new EARestAssuredV2(url, APIConstant.ApiMethods.GET, token);
+        response = eaRestAssuredV2.ExecuteWithQueryParams(queryParam);
     }
 
     @Then("^V2 I should check the author name as \"([^\"]*)\"$")
@@ -89,7 +99,7 @@ public class GETPostsAuthStepsV2 {
         var responseAuthorName = response.getBody().jsonPath().getString("author");
 
         System.out.println("responseAuthor= "+ responseAuthorName);
-
+        // V1
         assertThat(response.getBody().jsonPath().get("author"), hasItem(authorName));
     }
 
@@ -105,7 +115,6 @@ public class GETPostsAuthStepsV2 {
         // V2
         var respStr = response.getBody().asString();
         assertThat(respStr, matchesJsonSchemaInClasspath("post.json"));
-
     }
 
 
@@ -128,10 +137,14 @@ public class GETPostsAuthStepsV2 {
     public void iShouldSeeTheStreetNameAs(String streetName) {
 
         var a = response.getBody().as(Location[].class);
+        System.out.println("streetName= " + streetName);
+
     /*  // V1
+        System.out.println("Response streetName= " + a[0].getAddress().listIterator().next().getStreet());
         assertThat(a[0].getAddress().listIterator().next().getStreet(), equalTo(streetName));
     */
         Address address = a[0].getAddress().stream().filter(x -> x.getType().equalsIgnoreCase("primary")).findFirst().orElse(null);
+        System.out.println("Response streetName= " + address.getStreet());
 
         assertThat(address.getStreet(), equalTo(streetName));
     }

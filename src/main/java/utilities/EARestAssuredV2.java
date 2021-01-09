@@ -36,17 +36,15 @@ public class EARestAssuredV2 {
         request.contentType(ContentType.JSON);
         request.spec(requestSpec);
 
-        Response response;
         if (this.method.equalsIgnoreCase(APIConstant.ApiMethods.POST)) {
-            response = request.post(this.url);
+            return request.post(this.url);
         } else if (this.method.equalsIgnoreCase(APIConstant.ApiMethods.DELETE)) {
-            response = request.delete(this.url);
+            return request.delete(this.url);
         } else if (this.method.equalsIgnoreCase(APIConstant.ApiMethods.GET)) {
-            response = request.get(this.url);
-        } else
-            response = null;
+            return request.get(this.url);
+        }
 
-        return response;
+        return null;
     }
 
 
@@ -55,18 +53,22 @@ public class EARestAssuredV2 {
         return ExecuteAPI().getBody().jsonPath().get("access_token");
     }
 
-    public ResponseOptions<Response> ExecuteWithBody(Map<String, String> pathParams) {
-        builder.addPathParams(pathParams);
+    public ResponseOptions<Response> Execute() {
         return ExecuteAPI();
     }
 
-    public ResponseOptions<Response> ExecuteWithQueryParams(Map<String, String> queryPath) {
-        builder.addQueryParams(queryPath);
+    public ResponseOptions<Response> ExecuteWithBody(Object body) {
+        builder.setBody(body);
         return ExecuteAPI();
     }
 
-    public ResponseOptions<Response> ExecuteWithPathParams(Map<String, String> queryPath) {
-        builder.addPathParams(queryPath);
+    public ResponseOptions<Response> ExecuteWithQueryParams(Map<String, String> queryParam) {
+        builder.addQueryParams(queryParam);
+        return ExecuteAPI();
+    }
+
+    public ResponseOptions<Response> ExecuteWithPathParams(Map<String, String> pathParam) {
+        builder.addPathParams(pathParam);
         return ExecuteAPI();
     }
 
