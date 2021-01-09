@@ -28,8 +28,8 @@ import static org.hamcrest.Matchers.containsInAnyOrder;
 public class GETPostsAuthSteps {
 
 
-    public static ResponseOptions<Response> response;
-    public static String token;
+    private static ResponseOptions<Response> response;
+    private static String token;
 
 
     @Given("^I perform authentication operation for \"([^\"]*)\" with body$")
@@ -96,11 +96,11 @@ public class GETPostsAuthSteps {
     //Deserialize
     @Then("^I should see the author name as \"([^\"]*)\" with json validation$")
     public void iShouldSeeTheAuthorNameAsWithJsonValidation(String authorName) {
-
+        // V1
         Posts   post = response.getBody().as(Posts.class);
         assertThat(post.getAuthor(), equalTo(authorName));
 
-    /*
+    /*  // V2
         var respStr = response.getBody().asString();
         assertThat(respStr, matchesJsonSchemaInClasspath("post.json"));
     */
@@ -112,7 +112,7 @@ public class GETPostsAuthSteps {
     @And("^I perform GET operation with path parameter for address \"([^\"]*)\"$")
     public void iPerformGETOperationWithPathParameterForAddress(String url, DataTable table) {
         var data = table.raw();
-    /*
+    /*  // V1
         response = RestAssuredExtension.GetWithQueryParamsWithToken(url, pathParams, response.getBody().jsonPath().get("access_token"));
     */
         Map<String, String> queryParams = new HashMap<>();
@@ -126,7 +126,7 @@ public class GETPostsAuthSteps {
     public void iShouldSeeTheStreetNameAs(String streetName) {
 
         var a = response.getBody().as(Location[].class);
-    /*
+    /*  // V1
         assertThat(a[0].getAddress().getStreet(), equalTo(streetName));
     */
         Address address = a[0].getAddress().stream().filter(x -> x.getType().equalsIgnoreCase("primary")).findFirst().orElse(null);
