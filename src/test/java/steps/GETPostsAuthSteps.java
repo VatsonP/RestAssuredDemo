@@ -13,7 +13,7 @@ import pojo.Posts;
 import lombokdemo.model.LoginBody;
 import org.hamcrest.core.Is;
 import utilities.APIConstant;
-import utilities.EARestAssuredV2;
+//import utilities.EARestAssuredV2;
 import utilities.RestAssuredExtension;
 
 import java.util.HashMap;
@@ -61,6 +61,7 @@ public class GETPostsAuthSteps {
 
     @Given("^I perform GET operation with token for \"([^\"]*)\"$")
     public void iPerformGETOperationWithTokenFor(String url) {
+        // V1
         response = RestAssuredExtension.GetOpsWithToken(url, token);
     }
 
@@ -68,7 +69,7 @@ public class GETPostsAuthSteps {
     @Then("^I should check the author names like \"([^\"]*)\"$")
     public void iShouldCheckTheAuthorNamesLike(String authorName)  {
         System.out.println("authorName= " + authorName);
-
+        // V1
         assertThat(response.getBody().jsonPath().get("author"), containsInAnyOrder(authorName, authorName, null));
     }
 
@@ -80,7 +81,7 @@ public class GETPostsAuthSteps {
 
         Map<String, String> pathParam = new HashMap<>();
         pathParam.put(data.get(0).get(0), data.get(1).get(0));
-
+        // V1
         response = RestAssuredExtension.GetWithQueryParamsWithToken(url, pathParam, token);
     }
 
@@ -89,7 +90,7 @@ public class GETPostsAuthSteps {
         var responseAuthorName = response.getBody().jsonPath().getString("author");
 
         System.out.println("responseAuthor= "+ responseAuthorName);
-
+        // V1
         assertThat(response.getBody().jsonPath().get("author"), hasItem(authorName));
     }
 
@@ -129,7 +130,10 @@ public class GETPostsAuthSteps {
     public void iShouldSeeTheStreetNameAs(String streetName) {
 
         var a = response.getBody().as(Location[].class);
+        System.out.println("streetName= " + streetName);
+
         // V1
+        System.out.println("Response streetName= " + a[0].getAddress().listIterator().next().getStreet());
         assertThat(a[0].getAddress().listIterator().next().getStreet(), equalTo(streetName));
 
     /* // V2
