@@ -1,12 +1,14 @@
 package lombokdemo.model;
 
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
 import java.util.List;
 
 @Data
+@NoArgsConstructor(access = AccessLevel.PACKAGE)
+@Setter(value = AccessLevel.PACKAGE)
+@Getter
 public class Location {
     private int id;
     private String city;
